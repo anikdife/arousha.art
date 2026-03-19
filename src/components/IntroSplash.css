@@ -1,0 +1,166 @@
+.intro-splash {
+  opacity: 1;
+  transition: opacity 250ms ease;
+}
+
+.intro-splash--fade {
+  opacity: 0;
+}
+
+.intro-book {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.intro-book--anim {
+  transition: transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+.intro-tagline {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  transform: translateY(12px) scale(0.985);
+  transition: opacity 600ms ease-out, transform 600ms ease-out;
+  will-change: opacity, transform;
+}
+
+.intro-splash {
+  background: linear-gradient(135deg, #eff6ff 0%, #ffffff 55%, #f0fdf4 100%);
+  overflow: hidden;
+}
+
+.intro-splash svg {
+  display: block;
+}
+
+.intro-splash--fade {
+  opacity: 0;
+  transition: opacity 220ms ease-out;
+}
+
+.intro-tile {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+.intro-tile--scatter {
+  transition: transform 0ms linear;
+}
+
+.intro-tile__float {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform;
+  animation: introTileFloat 1600ms ease-in-out infinite alternate;
+}
+
+.intro-tile--assemble-overshoot {
+  animation: none;
+  transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.intro-tile--assemble {
+  animation: none;
+  transition: transform 400ms cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+
+.intro-tiles {
+  transition: opacity 220ms ease-out;
+}
+
+.intro-tiles--show {
+  opacity: 1;
+}
+
+.intro-tiles--hide {
+  opacity: 0;
+}
+
+.intro-merged {
+  transition: opacity 220ms ease-out;
+}
+
+.intro-merged--show {
+  opacity: 1;
+}
+
+.intro-merged--hide {
+  opacity: 0;
+}
+
+@keyframes introTileFloat {
+  0% {
+    transform: translate(0px, 0px) rotate(0deg) scale(1);
+  }
+  100% {
+    transform: translate(7px, -6px) rotate(1.2deg) scale(1);
+  }
+}
+
+.intro-tagline {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 520ms ease-out, transform 520ms ease-out;
+}
+
+.intro-tagline--show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.intro-shine {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.intro-shine--active rect {
+  animation: introShineSweep 700ms ease-out 1;
+}
+
+@keyframes introShineSweep {
+  0% {
+    transform: translateX(-900px);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(1900px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-splash--fade {
+    transition: none;
+  }
+
+  .intro-tile,
+  .intro-tile--scatter,
+  .intro-tile--assemble-overshoot,
+  .intro-tile--assemble {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .intro-tile__float {
+    animation: none !important;
+  }
+
+  .intro-tiles,
+  .intro-merged {
+    transition: none;
+  }
+
+  .intro-tagline {
+    transition: none;
+  }
+
+  .intro-shine--active rect {
+    animation: none;
+  }
+}

@@ -1,0 +1,94 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Admin bank files (STRICT PATHS)
+    // Read: anyone
+    // Write: only Firestore users/{uid}.role == "owner"
+    match /adminBanks/{year}/{module}/{fileName} {
+      allow read: if true;
+      allow write: if request.auth != null && (isOwner(request.auth.uid) || isOwnerEmail());
+    }
+
+    // Reading Magazine admin assets (STRICT PATHS)
+    // Read: authenticated users
+    // Write: only owners
+    match /adminReading/{year}/{module}/{path=**} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && (isOwner(request.auth.uid) || isOwnerEmail());
+    }
+
+    // Writing Prompts bank assets (STRICT PATHS)
+    // Read: authenticated users
+    // Write: only owners
+    match /writingPrompts/{year}/{path=**} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && (isOwner(request.auth.uid) || isOwnerEmail());
+    }
+
+    // Writing (Year 3) student answers
+    // Path: writingY3/{studentUid}/attempts/{attemptId}/answer.txt
+    match /writingY3/{studentUid}/{path=**} {
+      allow read: if request.auth != null
+        && (
+          request.auth.uid == studentUid
+          || canReadLinkedStudentSessions(request.auth.uid, studentUid)
+        );
+
+      // Only the student uploads/deletes their own answers.
+      allow write: if request.auth != null && request.auth.uid == studentUid;
+    }
+
+    // Practice sessions path: practiceSessions/{userId}/{fileName}
+    match /practiceSessions/{userId}/{fileName} {
+      // Student (owner) can read/write their own sessions
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      // Parent can read the student's sessions when the student's user profile
+      // stores the parent UID in `parentId`.
+      //
+      // Note: cross-service access to Firestore must use firestore.get(...)
+      // inside Storage rules.
+      allow read: if request.auth != null
+              && (isParentOfStudent(request.auth.uid, userId)
+                || canReadLinkedStudentSessions(request.auth.uid, userId));
+    }
+
+    // Sessions path: sessions/{userId}/{fileName} (alternative path)
+    match /sessions/{userId}/{fileName} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read: if request.auth != null
+                  && (isParentOfStudent(request.auth.uid, userId)
+                      || canReadLinkedStudentSessions(request.auth.uid, userId));
+    }
+
+    function canReadLinkedStudentSessions(callerUid, studentUid) {
+      return firestore.exists(/databases/(default)/documents/users/$(callerUid))
+             && (
+               firestore.get(/databases/(default)/documents/users/$(callerUid)).data.role in ['owner', 'parent', 'teacher']
+             )
+             && (
+               (firestore.get(/databases/(default)/documents/users/$(callerUid)).data.linkedStudentUids is list
+                 && (studentUid in firestore.get(/databases/(default)/documents/users/$(callerUid)).data.linkedStudentUids))
+               ||
+               (firestore.get(/databases/(default)/documents/users/$(callerUid)).data.linkedStudentIds is list
+                 && (studentUid in firestore.get(/databases/(default)/documents/users/$(callerUid)).data.linkedStudentIds))
+             );
+    }
+
+    function isParentOfStudent(parentUid, studentUid) {
+      return firestore.exists(/databases/(default)/documents/users/$(studentUid))
+             && firestore.get(/databases/(default)/documents/users/$(studentUid)).data.parentId == parentUid;
+    }
+
+    function isOwner(uid) {
+      return firestore.exists(/databases/(default)/documents/users/$(uid))
+             && firestore.get(/databases/(default)/documents/users/$(uid)).data.role == 'owner';
+    }
+
+    function isOwnerEmail() {
+      // Fallback owner allow-list by email (useful before Firestore role is set).
+      return request.auth.token.email != null
+             && request.auth.token.email == 'anik.dife@gmail.com';
+    }
+  }
+}

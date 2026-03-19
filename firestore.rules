@@ -1,0 +1,181 @@
+// firestore.rules
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function callerDoc() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function callerHasLinkedStudent(studentUid) {
+      return (
+        (callerDoc().linkedStudentUids is list && (studentUid in callerDoc().linkedStudentUids))
+        || (callerDoc().linkedStudentIds is list && (studentUid in callerDoc().linkedStudentIds))
+      );
+    }
+
+    // User profiles collection
+    match /users/{userId} {
+      allow read: if request.auth != null && (
+        request.auth.uid == userId
+        || (
+          userId != request.auth.uid
+          && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+          && (
+            callerDoc().role == 'owner'
+            || (
+              (callerDoc().role == 'parent' || callerDoc().role == 'teacher')
+              && callerHasLinkedStudent(userId)
+            )
+          )
+        )
+      );
+
+      allow create, update: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Session documents (Firestore) used by sessionService.ts
+    match /practiceSessions/{sessionId} {
+      allow create: if request.auth != null && request.resource.data.ownerUid == request.auth.uid;
+
+      // Allow read if:
+      // - User is the owner, OR
+      // - Sharing is enabled and public OR user is in viewers
+      allow read: if request.auth != null && (
+        resource.data.ownerUid == request.auth.uid ||
+        (
+          exists(/databases/$(database)/documents/users/$(request.auth.uid))
+          && (callerDoc().role == 'parent' || callerDoc().role == 'teacher' || callerDoc().role == 'owner')
+          && callerHasLinkedStudent(resource.data.ownerUid)
+        ) ||
+        (resource.data.share.enabled == true && (
+          resource.data.share.public == true ||
+          (resource.data.share.viewers != null && request.auth.uid in resource.data.share.viewers)
+        ))
+      );
+
+      // Allow update if:
+      // - User is the owner, AND
+      // - Not changing ownerUid, AND
+      // - If status changes to submitted, cannot revert to draft
+      allow update: if request.auth != null &&
+        resource.data.ownerUid == request.auth.uid &&
+        request.resource.data.ownerUid == resource.data.ownerUid &&
+        (resource.data.status != 'submitted' || request.resource.data.status == 'submitted');
+
+      allow delete: if request.auth != null && resource.data.ownerUid == request.auth.uid;
+    }
+
+    // Per-user counters
+    match /userCounters/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // Firestore session index: sessionIndex/{studentUid}/items/{sessionId}
+    match /sessionIndex/{studentUid}/items/{sessionId} {
+      allow read: if request.auth != null
+        && (
+          request.auth.uid == studentUid
+          || (
+            exists(/databases/$(database)/documents/users/$(request.auth.uid))
+            && (
+              callerDoc().role == 'owner'
+              || (
+                (callerDoc().role == 'parent' || callerDoc().role == 'teacher')
+                && callerHasLinkedStudent(studentUid)
+              )
+            )
+          )
+        );
+
+      allow write: if request.auth != null && request.auth.uid == studentUid;
+    }
+
+    // Reading Magazine (Year 3) progress + attempts
+    // Document paths:
+    // - readingMagazineY3/{studentUid}
+    // - readingMagazineY3/{studentUid}/stories/{storyId}
+    // - readingMagazineY3/{studentUid}/attempts/{attemptId}
+    match /readingMagazineY3/{studentUid}/{document=**} {
+      allow read: if request.auth != null
+        && (
+          request.auth.uid == studentUid
+          || (
+            exists(/databases/$(database)/documents/users/$(request.auth.uid))
+            && (
+              callerDoc().role == 'owner'
+              || (
+                (callerDoc().role == 'parent' || callerDoc().role == 'teacher')
+                && callerHasLinkedStudent(studentUid)
+              )
+            )
+          )
+        );
+
+      // Only the student can write their own progress/attempts.
+      allow write: if request.auth != null && request.auth.uid == studentUid;
+    }
+
+    function isAssessorRole() {
+      return exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && (callerDoc().role == 'owner' || callerDoc().role == 'parent' || callerDoc().role == 'teacher');
+    }
+
+    // Writing (Year 3) attempts
+    // Document path: writingY3/{studentUid}/attempts/{attemptId}
+    match /writingY3/{studentUid}/attempts/{attemptId} {
+      allow read: if request.auth != null
+        && (
+          request.auth.uid == studentUid
+          || (
+            exists(/databases/$(database)/documents/users/$(request.auth.uid))
+            && (callerDoc().role == 'owner' || callerDoc().role == 'parent' || callerDoc().role == 'teacher')
+            && callerHasLinkedStudent(studentUid)
+          )
+        );
+
+      // Student creates their own attempt.
+      allow create: if request.auth != null
+        && request.auth.uid == studentUid
+        && request.resource.data.studentUid == studentUid
+        && request.resource.data.year == 3;
+
+      // Student can update their attempt, but cannot modify assessment fields.
+      // (Allows "answer pruning" later while keeping scores immutable.)
+      allow update: if request.auth != null
+        && (
+          (
+            request.auth.uid == studentUid
+            && request.resource.data.studentUid == studentUid
+            && request.resource.data.year == 3
+            && request.resource.data.assessed == resource.data.assessed
+            && request.resource.data.assessedAt == resource.data.assessedAt
+            && request.resource.data.assessorUid == resource.data.assessorUid
+            && request.resource.data.scorePercent == resource.data.scorePercent
+            && request.resource.data.comment == resource.data.comment
+          )
+          || (
+            isAssessorRole()
+            && callerHasLinkedStudent(studentUid)
+            && resource.data.assessed != true
+            && request.resource.data.assessed == true
+            && request.resource.data.assessorUid == request.auth.uid
+            && request.resource.data.studentUid == studentUid
+            && request.resource.data.year == 3
+            && request.resource.data.answerStoragePath == resource.data.answerStoragePath
+            && request.resource.data.scorePercent is number
+            && request.resource.data.scorePercent >= 0
+            && request.resource.data.scorePercent <= 100
+          )
+        );
+
+      allow delete: if false;
+    }
+
+    // Deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

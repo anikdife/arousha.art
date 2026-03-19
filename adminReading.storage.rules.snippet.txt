@@ -1,0 +1,12 @@
+// Storage rules snippet for Reading Magazine admin assets (DO NOT DEPLOY AS-IS)
+//
+// REQUIRED:
+// - Owner write access to adminReading/**
+// - Authenticated read access to adminReading/**
+//
+// TODO: Replace email allow-list with Firestore role check or custom claims.
+//
+// match /adminReading/{path=**} {
+//   allow read: if request.auth != null;
+//   allow write: if request.auth != null && request.auth.token.email == "<OWNER_EMAIL_PLACEHOLDER>";
+// }

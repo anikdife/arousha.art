@@ -1,0 +1,602 @@
+[
+  {
+    "id": "lc-q001",
+    "type": "spell",
+    "skill": "spelling",
+    "prompt": "Write the correct spelling.",
+    "sentenceWithError": "I go to school on a buss.",
+    "errorToken": "buss",
+    "correctToken": "bus"
+  },
+  {
+    "id": "lc-q002",
+    "type": "spell",
+    "skill": "spelling",
+    "prompt": "Write the correct spelling.",
+    "sentenceWithError": "He has bloo eyes.",
+    "errorToken": "bloo",
+    "correctToken": "blue"
+  },
+  {
+    "id": "lc-q003",
+    "type": "spell",
+    "skill": "spelling",
+    "prompt": "Write the correct spelling.",
+    "sentenceWithError": "Mum sed that I should drink more milk.",
+    "errorToken": "sed",
+    "correctToken": "said"
+  },
+  {
+    "id": "lc-q004",
+    "type": "spell",
+    "skill": "spelling",
+    "prompt": "Write the correct spelling.",
+    "sentenceWithError": "I started having a cupp of warm milk each day.",
+    "errorToken": "cupp",
+    "correctToken": "cup"
+  },
+  {
+    "id": "lc-q005",
+    "type": "spell",
+    "skill": "spelling",
+    "prompt": "Write the correct spelling.",
+    "sentenceWithError": "The colours of my uniform are darke green and gold.",
+    "errorToken": "darke",
+    "correctToken": "dark"
+  },
+  {
+    "id": "lc-q006",
+    "type": "spell",
+    "skill": "spelling",
+    "prompt": "Write the correct spelling.",
+    "sentenceWithError": "The water fellt cool on her feet.",
+    "errorToken": "fellt",
+    "correctToken": "felt"
+  },
+  {
+    "id": "lc-q007",
+    "type": "spell",
+    "skill": "spelling",
+    "prompt": "Write the correct spelling.",
+    "sentenceWithError": "Jess sings and playes the drums in the band.",
+    "errorToken": "playes",
+    "correctToken": "plays"
+  },
+  {
+    "id": "lc-q008",
+    "type": "spell",
+    "skill": "spelling",
+    "prompt": "Write the correct spelling.",
+    "sentenceWithError": "There is a parth from the gate to our front door.",
+    "errorToken": "parth",
+    "correctToken": "path"
+  },
+  {
+    "id": "lc-q009",
+    "type": "spell",
+    "skill": "spelling",
+    "prompt": "Write the correct spelling.",
+    "sentenceWithError": "The pilow on my bed is very soft.",
+    "errorToken": "pilow",
+    "correctToken": "pillow"
+  },
+  {
+    "id": "lc-q010",
+    "type": "spell",
+    "skill": "spelling",
+    "prompt": "Write the correct spelling.",
+    "sentenceWithError": "Friday is our last chanse to see the show.",
+    "errorToken": "chanse",
+    "correctToken": "chance"
+  },
+  {
+    "id": "lc-q011",
+    "type": "selectIncorrect",
+    "skill": "spelling",
+    "prompt": "Shade the incorrect word.",
+    "sentence": "Mum sed that I should drink more milk.",
+    "tokens": ["Mum", "sed", "that", "I", "should", "drink", "more", "milk."],
+    "incorrectIndex": 1,
+    "correctToken": "said"
+  },
+  {
+    "id": "lc-q012",
+    "type": "selectIncorrect",
+    "skill": "spelling",
+    "prompt": "Shade the incorrect word.",
+    "sentence": "We could see the moon and starz in the clear sky.",
+    "tokens": ["We", "could", "see", "the", "moon", "and", "starz", "in", "the", "clear", "sky."],
+    "incorrectIndex": 6,
+    "correctToken": "stars"
+  },
+  {
+    "id": "lc-q013",
+    "type": "selectIncorrect",
+    "skill": "spelling",
+    "prompt": "Shade the incorrect word.",
+    "sentence": "I found a gum leef in the park.",
+    "tokens": ["I", "found", "a", "gum", "leef", "in", "the", "park."],
+    "incorrectIndex": 4,
+    "correctToken": "leaf"
+  },
+  {
+    "id": "lc-q020",
+    "type": "mcq",
+    "skill": "wordChoice",
+    "prompt": "Choose the correct word to complete the sentence.",
+    "sentence": "I like going ___ the city.",
+    "choices": ["at", "on", "to", "in"],
+    "correctIndex": 2
+  },
+  {
+    "id": "lc-q021",
+    "type": "mcq",
+    "skill": "wordChoice",
+    "prompt": "Choose the correct word to complete the sentence.",
+    "sentence": "I went for a ride ___ my bike.",
+    "choices": ["on", "into", "in", "onto"],
+    "correctIndex": 0
+  },
+  {
+    "id": "lc-q022",
+    "type": "mcq",
+    "skill": "grammar",
+    "prompt": "Choose the correct word.",
+    "sentence": "John will be coming with you and ___.",
+    "choices": ["we", "ourselves", "they", "us"],
+    "correctIndex": 3
+  },
+  {
+    "id": "lc-q030",
+    "type": "mcq",
+    "skill": "capitalisation",
+    "prompt": "Which sentence is written correctly?",
+    "choices": [
+      "On thursday we will make a cake.",
+      "On Thursday we will make a cake.",
+      "on Thursday we will make a cake.",
+      "On thursday We will make a cake."
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "lc-q040",
+    "type": "mcq",
+    "skill": "punctuation",
+    "prompt": "Which sentence is punctuated correctly?",
+    "choices": [
+      "Homework is fun",
+      "homework is fun.",
+      "Homework is fun.",
+      "Homework Is Fun."
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "lc-q050",
+    "type": "mcq",
+    "skill": "sentence",
+    "prompt": "Which of these is a sentence?",
+    "choices": [
+      "Running in the park",
+      "The dog running fast",
+      "The dog is running fast.",
+      "Running fast dog"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "lc-q060",
+    "type": "mcq",
+    "skill": "grammar",
+    "prompt": "Which word can replace “Dan and I”?",
+    "choices": ["we", "them", "us", "they"],
+    "correctIndex": 0
+  },
+{
+"id": "lc2-q001",
+"type": "spell",
+"skill": "spelling",
+"prompt": "Write the correct spelling.",
+"sentenceWithError": "The cat has a long tayl.",
+"errorToken": "tayl",
+"correctToken": "tail"
+},
+{
+"id": "lc2-q002",
+"type": "spell",
+"skill": "spelling",
+"prompt": "Write the correct spelling.",
+"sentenceWithError": "We had a party at my hause.",
+"errorToken": "hause",
+"correctToken": "house"
+},
+{
+"id": "lc2-q003",
+"type": "spell",
+"skill": "spelling",
+"prompt": "Write the correct spelling.",
+"sentenceWithError": "I like to eat a redd apple.",
+"errorToken": "redd",
+"correctToken": "red"
+},
+{
+"id": "lc2-q004",
+"type": "spell",
+"skill": "spelling",
+"prompt": "Write the correct spelling.",
+"sentenceWithError": "The bird flew hi into the sky.",
+"errorToken": "hi",
+"correctToken": "high"
+},
+{
+"id": "lc2-q005",
+"type": "spell",
+"skill": "spelling",
+"prompt": "Write the correct spelling.",
+"sentenceWithError": "Please help me brush my teeth.",
+"errorToken": "teeth",
+"correctToken": "teeth"
+},
+{
+"id": "lc2-q006",
+"type": "spell",
+"skill": "spelling",
+"prompt": "Write the correct spelling.",
+"sentenceWithError": "He sed it was time to go.",
+"errorToken": "sed",
+"correctToken": "said"
+},
+{
+"id": "lc2-q007",
+"type": "spell",
+"skill": "spelling",
+"prompt": "Write the correct spelling.",
+"sentenceWithError": "The water in the pool is bloo.",
+"errorToken": "bloo",
+"correctToken": "blue"
+},
+{
+"id": "lc2-q008",
+"type": "spell",
+"skill": "spelling",
+"prompt": "Write the correct spelling.",
+"sentenceWithError": "I have a new gaim for my computer.",
+"errorToken": "gaim",
+"correctToken": "game"
+},
+{
+"id": "lc2-q009",
+"type": "selectIncorrect",
+"skill": "spelling",
+"prompt": "Shade the incorrect word.",
+"sentence": "The dog ran down the rowd.",
+"tokens": ["The", "dog", "ran", "down", "the", "rowd."],
+"incorrectIndex": 5,
+"correctToken": "road"
+},
+{
+"id": "lc2-q010",
+"type": "selectIncorrect",
+"skill": "spelling",
+"prompt": "Shade the incorrect word.",
+"sentence": "I will go to the shop tomoro.",
+"tokens": ["I", "will", "go", "to", "the", "shop", "tomoro."],
+"incorrectIndex": 6,
+"correctToken": "tomorrow"
+},
+{
+"id": "lc2-q011",
+"type": "selectIncorrect",
+"skill": "spelling",
+"prompt": "Shade the incorrect word.",
+"sentence": "My teatcher is very kind to us.",
+"tokens": ["My", "teatcher", "is", "very", "kind", "to", "us."],
+"incorrectIndex": 1,
+"correctToken": "teacher"
+},
+{
+"id": "lc2-q012",
+"type": "selectIncorrect",
+"skill": "spelling",
+"prompt": "Shade the incorrect word.",
+"sentence": "We ate lunch unda the tree.",
+"tokens": ["We", "ate", "lunch", "unda", "the", "tree."],
+"incorrectIndex": 3,
+"correctToken": "under"
+},
+{
+"id": "lc2-q013",
+"type": "selectIncorrect",
+"skill": "spelling",
+"prompt": "Shade the incorrect word.",
+"sentence": "He lookt at the stars at night.",
+"tokens": ["He", "lookt", "at", "the", "stars", "at", "night."],
+"incorrectIndex": 1,
+"correctToken": "looked"
+},
+{
+"id": "lc2-q014",
+"type": "selectIncorrect",
+"skill": "spelling",
+"prompt": "Shade the incorrect word.",
+"sentence": "There are meny books on the shelf.",
+"tokens": ["There", "are", "meny", "books", "on", "the", "shelf."],
+"incorrectIndex": 2,
+"correctToken": "many"
+},
+{
+"id": "lc2-q015",
+"type": "selectIncorrect",
+"skill": "spelling",
+"prompt": "Shade the incorrect word.",
+"sentence": "She has a prety dress for school.",
+"tokens": ["She", "has", "a", "prety", "dress", "for", "school."],
+"incorrectIndex": 3,
+"correctToken": "pretty"
+},
+{
+"id": "lc2-q016",
+"type": "selectIncorrect",
+"skill": "spelling",
+"prompt": "Shade the incorrect word.",
+"sentence": "I want to be a pilot when I growe up.",
+"tokens": ["I", "want", "to", "be", "a", "pilot", "when", "I", "growe", "up."],
+"incorrectIndex": 8,
+"correctToken": "grow"
+},
+{
+"id": "lc2-q017",
+"type": "mcq",
+"skill": "grammar",
+"prompt": "Which word completes the sentence correctly?",
+"sentence": "The children _______ playing in the park yesterday.",
+"choices": ["was", "were", "is", "am"],
+"correctIndex": 1
+},
+{
+"id": "lc2-q018",
+"type": "mcq",
+"skill": "grammar",
+"prompt": "Which word completes the sentence correctly?",
+"sentence": "I have two _______ on my feet.",
+"choices": ["shoe", "shoes", "shoeing", "shoed"],
+"correctIndex": 1
+},
+{
+"id": "lc2-q019",
+"type": "mcq",
+"skill": "grammar",
+"prompt": "Which word should be used here?",
+"sentence": "That book belongs to _______.",
+"choices": ["I", "my", "me", "mine's"],
+"correctIndex": 2
+},
+{
+"id": "lc2-q020",
+"type": "mcq",
+"skill": "wordChoice",
+"prompt": "Which word completes the sentence?",
+"sentence": "The baby _______ when she was hungry.",
+"choices": ["cried", "cry", "crying", "cries"],
+"correctIndex": 0
+},
+{
+"id": "lc2-q021",
+"type": "mcq",
+"skill": "wordChoice",
+"prompt": "Which word completes the sentence?",
+"sentence": "Please put your toys _______ the box.",
+"choices": ["on", "at", "inside", "underneaths"],
+"correctIndex": 2
+},
+{
+"id": "lc2-q022",
+"type": "mcq",
+"skill": "grammar",
+"prompt": "Which word completes the sentence?",
+"sentence": "Yesterday, my dad _______ a cake.",
+"choices": ["bake", "bakes", "baked", "baking"],
+"correctIndex": 2
+},
+{
+"id": "lc2-q023",
+"type": "mcq",
+"skill": "wordChoice",
+"prompt": "Which word completes the sentence?",
+"sentence": "There is _______ orange on the table.",
+"choices": ["a", "an", "the", "some"],
+"correctIndex": 1
+},
+{
+"id": "lc2-q024",
+"type": "mcq",
+"skill": "grammar",
+"prompt": "Which word completes the sentence?",
+"sentence": "Sam and Ben _______ best friends.",
+"choices": ["is", "am", "be", "are"],
+"correctIndex": 3
+},
+{
+"id": "lc2-q025",
+"type": "mcq",
+"skill": "grammar",
+"prompt": "Which word completes the sentence?",
+"sentence": "They are going to _______ house.",
+"choices": ["there", "their", "they're", "them"],
+"correctIndex": 1
+},
+{
+"id": "lc2-q026",
+"type": "mcq",
+"skill": "punctuation",
+"prompt": "Which sentence is punctuated correctly?",
+"choices": [
+"where are you going.",
+"where are you going?",
+"Where are you going?",
+"Where are you going."
+],
+"correctIndex": 2
+},
+{
+"id": "lc2-q027",
+"type": "mcq",
+"skill": "punctuation",
+"prompt": "Which sentence has the correct full stop?",
+"choices": [
+"The sun is hot",
+"The sun is hot.",
+"the sun is hot",
+"the sun is hot."
+],
+"correctIndex": 1
+},
+{
+"id": "lc2-q028",
+"type": "mcq",
+"skill": "punctuation",
+"prompt": "Which sentence uses a comma correctly?",
+"choices": [
+"I like apples pears and grapes.",
+"I like apples, pears and grapes.",
+"I like apples, pears, and, grapes.",
+"I, like apples pears and grapes."
+],
+"correctIndex": 1
+},
+{
+"id": "lc2-q029",
+"type": "mcq",
+"skill": "punctuation",
+"prompt": "Which sentence uses an exclamation mark correctly?",
+"choices": [
+"Look out for the car!",
+"look out for the car!",
+"Look out for the car?",
+"Look out for the car."
+],
+"correctIndex": 0
+},
+{
+"id": "lc2-q030",
+"type": "mcq",
+"skill": "capitalisation",
+"prompt": "Which word needs a capital letter?",
+"sentence": "We are going to sydney for the holidays.",
+"choices": ["going", "sydney", "for", "holidays"],
+"correctIndex": 1
+},
+{
+"id": "lc2-q031",
+"type": "mcq",
+"skill": "capitalisation",
+"prompt": "Which sentence is capitalised correctly?",
+"choices": [
+"my friend is called tom.",
+"My friend is called tom.",
+"My friend is called Tom.",
+"my friend is called Tom."
+],
+"correctIndex": 2
+},
+{
+"id": "lc2-q032",
+"type": "mcq",
+"skill": "capitalisation",
+"prompt": "Which word needs a capital letter?",
+"sentence": "Our sport day is on friday.",
+"choices": ["sport", "day", "on", "friday"],
+"correctIndex": 3
+},
+{
+"id": "lc2-q033",
+"type": "mcq",
+"skill": "capitalisation",
+"prompt": "Which sentence is capitalised correctly?",
+"choices": [
+"i love school.",
+"I love School.",
+"I love school.",
+"i Love school."
+],
+"correctIndex": 2
+},
+{
+"id": "lc2-q034",
+"type": "mcq",
+"skill": "sentence",
+"prompt": "Which of these is a complete sentence?",
+"choices": [
+"The big brown dog.",
+"Running to the shop.",
+"The dog barked loudly.",
+"Under the table."
+],
+"correctIndex": 2
+},
+{
+"id": "lc2-q035",
+"type": "mcq",
+"skill": "sentence",
+"prompt": "Which of these is a complete sentence?",
+"choices": [
+"She ate her lunch.",
+"A blue hat.",
+"Going to the park today.",
+"My sister and I."
+],
+"correctIndex": 0
+},
+{
+"id": "lc2-q036",
+"type": "mcq",
+"skill": "sentence",
+"prompt": "Which sentence makes the most sense?",
+"choices": [
+"The cat sat on the mat.",
+"The mat sat on the cat.",
+"Sat the cat on the mat.",
+"Cat the mat sat on."
+],
+"correctIndex": 0
+},
+{
+"id": "lc2-q037",
+"type": "mcq",
+"skill": "sentence",
+"prompt": "Which word is missing to make this a sentence?",
+"sentence": "The boy _______ his bike to school.",
+"choices": ["rode", "riding", "red", "road"],
+"correctIndex": 0
+},
+{
+"id": "lc2-q038",
+"type": "spell",
+"skill": "spelling",
+"prompt": "Write the correct spelling.",
+"sentenceWithError": "I have ten fingas.",
+"errorToken": "fingas",
+"correctToken": "fingers"
+},
+{
+"id": "lc2-q039",
+"type": "spell",
+"skill": "spelling",
+"prompt": "Write the correct spelling.",
+"sentenceWithError": "The buss stops here.",
+"errorToken": "buss",
+"correctToken": "bus"
+},
+{
+"id": "lc2-q040",
+"type": "spell",
+"skill": "spelling",
+"prompt": "Write the correct spelling.",
+"sentenceWithError": "It is funn to play.",
+"errorToken": "funn",
+"correctToken": "fun"
+}
+]
+
+

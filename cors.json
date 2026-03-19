@@ -1,0 +1,22 @@
+[
+  {
+    "origin": [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "https://arousha.art",
+      "https://www.arousha.art"
+    ],
+    "method": ["GET", "HEAD", "OPTIONS"],
+    "maxAgeSeconds": 3600,
+    "responseHeader": [
+      "Content-Type",
+      "Content-Length",
+      "Content-Disposition",
+      "ETag",
+      "Cache-Control",
+      "x-goog-meta-*",
+      "x-goog-generation",
+      "x-goog-metageneration"
+    ]
+  }
+]
