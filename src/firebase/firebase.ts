@@ -6,13 +6,21 @@ import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import { getFunctions } from 'firebase/functions';
 
+const requiredEnv = (name: string): string => {
+  const value = process.env[name as keyof NodeJS.ProcessEnv];
+  if (!value) {
+    throw new Error(`Missing required environment variable: ${name}`);
+  }
+  return value;
+};
+
 const firebaseConfig = {
-  apiKey: "REDACTED",
-  authDomain: "matha-6878d.firebaseapp.com",
-  projectId: "matha-6878d",
-  storageBucket: "matha-6878d.firebasestorage.app",
-  messagingSenderId: "528799786012",
-  appId: "1:528799786012:web:44f2bb5de0398166702bd9"
+  apiKey: requiredEnv('REACT_APP_FIREBASE_API_KEY'),
+  authDomain: requiredEnv('REACT_APP_FIREBASE_AUTH_DOMAIN'),
+  projectId: requiredEnv('REACT_APP_FIREBASE_PROJECT_ID'),
+  storageBucket: requiredEnv('REACT_APP_FIREBASE_STORAGE_BUCKET'),
+  messagingSenderId: requiredEnv('REACT_APP_FIREBASE_MESSAGING_SENDER_ID'),
+  appId: requiredEnv('REACT_APP_FIREBASE_APP_ID')
 };
 
 

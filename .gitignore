@@ -11,6 +11,17 @@
 # production
 /build
 
+# local firebase cache
+/.firebase
+
+# local env files (keep example)
+.env
+.env.*
+!.env.example
+
+# archives
+*.zip
+
 # misc
 .DS_Store
 .env.local
