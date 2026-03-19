@@ -4,6 +4,22 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwnerEmail() {
+      // Fallback owner allow-list by email.
+      // (Prefer custom claims for multi-owner setups.)
+      return isSignedIn()
+        && request.auth.token.email != null
+        && request.auth.token.email == 'anik.dife@gmail.com';
+    }
+
+    function isOwner() {
+      return isOwnerEmail() || (isSignedIn() && request.auth.token.role == 'owner');
+    }
+
     function callerDoc() {
       return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
     }
@@ -32,7 +48,44 @@ service cloud.firestore {
         )
       );
 
-      allow create, update: if request.auth != null && request.auth.uid == userId;
+      // IMPORTANT SECURITY NOTE:
+      // Do not allow users to freely edit authorization fields (role/linking),
+      // otherwise they can grant themselves access to other users' data.
+      function isCreateSafe() {
+        // On create, require uid match and forbid pre-linking to other users.
+        return request.resource.data.uid == userId
+          && (
+            (request.resource.data.role in ['student', 'parent', 'teacher'])
+            || (isOwnerEmail() && request.resource.data.role == 'owner')
+          )
+          && (!(request.resource.data.linkedStudentUids is list) || request.resource.data.linkedStudentUids.size() == 0)
+          && (!(request.resource.data.linkedStudentIds is list) || request.resource.data.linkedStudentIds.size() == 0)
+          && (!(request.resource.data.linkedParentUids is list) || request.resource.data.linkedParentUids.size() == 0);
+      }
+
+      function isUpdateSafe() {
+        // Prevent changing privileged fields.
+        // Owner email may promote itself to role=owner (first-time setup).
+        return (
+          isOwnerEmail() && request.resource.data.role == 'owner'
+        )
+        || (
+          request.resource.data.uid == resource.data.uid
+          && request.resource.data.role == resource.data.role
+          && !request.resource.data.diff(resource.data).changedKeys().hasAny([
+            'uid',
+            'role',
+            'linkedStudentUids',
+            'linkedStudentIds',
+            'linkedParentUids',
+            'createdAt'
+          ])
+        );
+      }
+
+      allow create: if isSignedIn() && request.auth.uid == userId && isCreateSafe();
+      allow update: if isSignedIn() && request.auth.uid == userId && isUpdateSafe();
+      allow delete: if false;
     }
 
     // Session documents (Firestore) used by sessionService.ts
