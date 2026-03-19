@@ -20,7 +20,7 @@ It integrates Firebase (Hosting/Functions/Firestore/Storage) and generates/reads
 - Interactive UI with 3D and motion components
 
 ## Demo
-- Live link: (add URL)
+- Live link: https://arousha.art
 
 ## Architecture
 ```mermaid
